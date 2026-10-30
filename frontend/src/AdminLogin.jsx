@@ -1,25 +1,33 @@
 import { useState } from "react";
 import "./AdminLogin.css";
 
+const API_BASE_URL = "https://roadrescue-1.onrender.com";
+
 function AdminLogin({ onLogin, onBack }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
     setError("");
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        API_BASE_URL + "/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            },
+          body: JSON.stringify({
+            email: email.trim(),
+            password: password,
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -29,11 +37,15 @@ function AdminLogin({ onLogin, onBack }) {
 
       onLogin(data.token);
     } catch (err) {
-      setError(err.message || "Unable to connect to the server.");
+      setError(
+        err instanceof TypeError
+          ? "Unable to connect to the server. Please try again."
+          : err.message || "Unable to connect to the server."
+      );
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   return (
     <main className="admin-login-page">
