@@ -1,9 +1,11 @@
 import { useState } from "react";
 import "./App.css";
-import Admin from "./admin";
+import Admin from "./Admin";
 import AdminLogin from "./AdminLogin";
 
-const API_URL = "http://localhost:5000/api/bookings";
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "https://roadrescue-1.onrender.com/api/bookings";
 
 const SERVICES = [
   { icon: "🔋", title: "Battery Jump-Start", description: "Help when your vehicle battery runs out.", value: "Battery Jump-Start" },
