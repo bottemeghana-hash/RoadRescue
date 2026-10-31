@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "./Admin.css";
 
-const API_URL = "http://localhost:5000/api/bookings";
+const API_URL = "https://roadrescue-1.onrender.com/api/bookings";
 
 const STATUSES = [
   "Pending",
